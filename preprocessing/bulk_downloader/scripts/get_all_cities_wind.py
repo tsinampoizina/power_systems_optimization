@@ -91,7 +91,7 @@ def _download_ftp_file(ftp_handle, name, dest, overwrite):
                 
                 ftp_handle.retrbinary("RETR {0}".format(name), f.write)
 
-            clean_wind_excel_file(local_path_of_csv)
+            clean_solar_excel_file(local_path_of_csv)
             print("downloaded: {0}".format(dest))
         except Exception as e:
             print("FAILED: {0}".format(dest),e)
@@ -150,12 +150,13 @@ if __name__ == "__main__":
     username = ""
     password = ""
     # for solar radiation
-    #remote_dir = "/badc/ukmo-midas-open/data/uk-radiation-obs/dataset-version-202107/"
+    remote_dir = "/badc/ukmo-midas-open/data/uk-radiation-obs/dataset-version-202107/"
+    local_dir = "/Volumes/WD-DATA-100/power_optimisation_system/raw_data/data_solar/"
     # for wind speed
-    remote_dir = "/badc/ukmo-midas-open/data/uk-mean-wind-obs/dataset-version-202107/"
-    local_dir = "/Volumes/WD-DATA-100/power_optimisation_system/raw_data/data_wind/"
+    #remote_dir = "/badc/ukmo-midas-open/data/uk-mean-wind-obs/dataset-version-202107/"
+    #local_dir = "/Volumes/WD-DATA-100/power_optimisation_system/raw_data/data_wind/"
     # for all years
-    pattern = ".*\/qc-version-1\/.*(19*|20*).csv"
+    pattern = ".*\/qc-version-1\/.*_(19..|20..).csv"
     # for some years
     #pattern = ".*\/w.*\/.*\/qc-version-1\/.*(2015|2016|2017|2018|2019).csv"
 
