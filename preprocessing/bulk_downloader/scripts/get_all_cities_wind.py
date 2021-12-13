@@ -28,9 +28,9 @@ def clean_solar_excel_file(filename):
 
 def clean_wind_excel_file(filename):
     
-    df = pd.read_csv(filename, skiprows=280,
+    df = pd.read_csv(filename, skiprows=79,
                             skipfooter=1, engine='python',parse_dates=True)
-    df = df[["ob_time",'wind_speed']]
+    df = df[["ob_end_time",'mean_wind_speed']]
     df.fillna(0, inplace=True)
    
     df.to_csv(filename,index=False)
@@ -91,7 +91,7 @@ def _download_ftp_file(ftp_handle, name, dest, overwrite):
                 
                 ftp_handle.retrbinary("RETR {0}".format(name), f.write)
 
-            clean_solar_excel_file(local_path_of_csv)
+            clean_wind_excel_file(local_path_of_csv)
             print("downloaded: {0}".format(dest))
         except Exception as e:
             print("FAILED: {0}".format(dest),e)
@@ -146,13 +146,17 @@ def download_ftp_tree(ftp_handle, path, destination, pattern=None, overwrite=Fal
     os.chdir(original_directory)  # reset working directory to what it was before function exec
 
 if __name__ == "__main__":
-    # Example usage mirroring all jpg files in an FTP directory tree.
     mysite = "ftp.ceda.ac.uk"
-    username = "jhumasadhukhan"
-    password = "Tushprajd5"
-    remote_dir = "/badc/ukmo-midas-open/data/uk-radiation-obs/dataset-version-202107/"
-    local_dir = "C:/Sohum/Home/CodeHome/Python/optimization_course/energy_sytems_optimization/preprocessing/bulk_downloader/data/solar/"
-    pattern = ".*\/qc-version-1\/.*(2015|2016|2017|2018|2019).csv"
+    username = ""
+    password = ""
+    # for solar radiation
+    #remote_dir = "/badc/ukmo-midas-open/data/uk-radiation-obs/dataset-version-202107/"
+    # for wind speed
+    remote_dir = "/badc/ukmo-midas-open/data/uk-mean-wind-obs/dataset-version-202107/"
+    local_dir = "/Volumes/WD-DATA-100/power_optimisation_system/raw_data/data_wind/"
+    # for all years
+    pattern = ".*\/qc-version-1\/.*(19*|20*).csv"
+    # for some years
     #pattern = ".*\/w.*\/.*\/qc-version-1\/.*(2015|2016|2017|2018|2019).csv"
 
     # pattern = ".*qc-version-1/"
